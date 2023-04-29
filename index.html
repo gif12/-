@@ -1,27 +1,96 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>وبسایت متحرک با توپ‌ها</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-    <header>
-      <h1>وبسایت متحرک با توپ‌ها</h1>
-      <a href="#" class="button">ثبت نام</a>
-      <a href="#" class="button">ورود</a>
-      <div class="clear"></div>
-    </header>
-    
-    <div id="container">
-      <div id="ball1"></div>
-      <div id="ball2"></div>
-      <div id="ball3"></div>
-    </div>
 
-    <footer>
-      <p>تمامی حقوق محفوظ است.</p>
-    </footer>
+<head>
+  <title>سامانه عضویت و ورود کاربران</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* این قسمت فقط برای زیبایی صفحه و ابعاد مناسب اجزای آن استفاده شده است */
+    * {
+      box-sizing: border-box;
+    }
 
-    <script src="script.js"></script>
-  </body>
+    input[type=text],
+    input[type=email],
+    input[type=password] {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid black;
+      outline: none;
+      font-size: 16px;
+    }
+
+    button[type=submit] {
+      background-color: black;
+      color: white;
+      padding: 10px 0;
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    button[type=submit]:hover {
+      background-color: #666;
+    }
+
+    .container {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      margin-top: 50px;
+      width: 30%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 32px;
+      color: black;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>سامانه عضویت و ورود کاربران</h1>
+
+    <form id="register-form" method="POST">
+      <h2>ثبت نام</h2>
+      <input type="text" placeholder="نام کاربری" name="username" required>
+      <input type="email" placeholder="ایمیل" name="email" required>
+      <input type="password" placeholder="رمز عبور" name="password" required>
+      <button type="submit">ثبت نام</button>
+    </form>
+
+    <form id="login-form" method="POST">
+      <h2>ورود</h2>
+      <input type="email" placeholder="ایمیل" name="email" required>
+      <input type="password" placeholder="رمز عبور" name="password" required>
+      <button type="submit">ورود</button>
+    </form>
+
+  </div>
+
+  <script src="script.js"></script>
+
+  <?php
+    //
+    session_start();
+    if(isset($_SESSION['username'])) {
+      header("Location: dashboard.php");
+      exit();
+    }
+  ?>
+
+</body>
+
 </html>
