@@ -1,12 +1,11 @@
-// ایجاد اتصال با دیتابیس
 $servername = "localhost";
 $username = "[نام کاربری دیتابیس]";
 $password = "[رمز عبور دیتابیس]";
 $dbname = "[نام دیتابیس]";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// ثبت نام کاربر
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
+// ثبت نام کاربران
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['register'])) {
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -25,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
   echo "ثبت نام با موفقیت انجام شد.";
 }
 
-// ورود کاربر
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
+// ورود به حساب کاربری
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['login'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
 
@@ -43,12 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $_SESSION['username'] = $username;
     $_SESSION['email'] = $email;
 
-    // ریدایرکت به داشبورد کاربری
-    header("Location: dashboard.php");
-    exit();
+    echo "شما وارد حساب کاربری خود شدید.";
   } else {
-    echo "عملیات ورود ناموفق بود. لطفاً اطلاعات ورودی را بررسی کنید.";
+    echo "ایمیل یا رمز عبور اشتباه است.";
   }
 }
 
+// بستن اتصال به دیتابیس
 mysqli_close($conn);
