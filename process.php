@@ -1,47 +1,23 @@
 <?php
-// تنظیمات فایل و زمان
-date_default_timezone_set('Asia/Tehran');
+// تعریف مسیر پوشه
 define('APP_PATH', dirname(__FILE__));
 define('DATA_PATH', APP_PATH . '/data');
-define('CONFIG_FILE', DATA_PATH . '/config.txt');
-define('USERS_FILE', DATA_PATH . '/users.txt');
-define('LOG_FILE', DATA_PATH . '/log.txt');
-
-// تابع بررسی وجود پوشه و فایل‌ها
-function check_folders_files() {
-    if(!is_dir(DATA_PATH)) {
-        mkdir(DATA_PATH);
-        chmod(DATA_PATH, 0755);
-    }
-    if(!file_exists(CONFIG_FILE)) {
-        $fp = fopen(CONFIG_FILE, 'w');
-        fclose($fp);
-        chmod(CONFIG_FILE, 0600);
-    }
-    if(!file_exists(USERS_FILE)) {
-        $fp = fopen(USERS_FILE, 'w');
-        fclose($fp);
-        chmod(USERS_FILE, 0600);
-    }
-    if(!file_exists(LOG_FILE)) {
-        $fp = fopen(LOG_FILE, 'w');
-        fclose($fp);
-        chmod(LOG_FILE, 0600);
-    }
-}
 
 // بررسی وجود پوشه‌ها و فایل‌ها
-check_folders_files();
+if(!is_dir(DATA_PATH)) {
+    mkdir(DATA_PATH);
+}
 
-// خواندن تنظیمات اتصال به دیتابیس
-$db_config = parse_ini_file(CONFIG_FILE);
+if(!file_exists(DATA_PATH.'/users.txt')) {
+    file_put_contents(DATA_PATH.'/users.txt', '');
+}
 
-// اتصال به پایگاه داده
-$conn = mysqli_connect($db_config['host'], $db_config['username'], $db_config['password'], $db_config['dbname']);
+if(!file_exists(DATA_PATH.'/config.txt')) {
+    file_put_contents(DATA_PATH.'/config.txt', '');
+}
 
-// بررسی وضعیت اتصال
-if(!$conn) {
-    die("اتصال به پایگاه داده با خطا مواجه شد.");
+if(!file_exists(DATA_PATH.'/log.txt')) {
+    file_put_contents(DATA_PATH.'/log.txt', '');
 }
 
 // شروع نشست
@@ -52,7 +28,9 @@ $error = '';
 
 // پردازش فرم‌ها
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
     switch($_POST['form']) {
+
         case 'register':
             // ثبت‌نام کاربر جدید
             $username = $_POST['username'];
@@ -61,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
 
             // بررسی تکراری نبودن ایمیل
-            $existing_users = file(USERS_FILE, FILE_IGNORE_NEW_LINES);
+            $existing_users = file(DATA_PATH.'/users.txt', FILE_IGNORE_NEW_LINES);
             foreach($existing_users as $existing_user) {
                 $user_data = explode("|", $existing_user);
                 if($user_data[2] === $email) {
@@ -70,42 +48,36 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
 
-            // ثبت‌نام کاربر جدید
             if(empty($error) && strlen($username) >= 4 && strlen($password) >= 6 && $password === $confirm_password && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                $new_user = "$username|$password_hash|$email\n";
-                file_put_contents(USERS_FILE, $new_user, FILE_APPEND);
-                header("Location: welcome.php");
+                // اضافه کردن کاربر جدید
+                $user_data = "$username|$email|".md5($password);
+                file_put_contents(DATA_PATH.'/users.txt', $user_data.PHP_EOL, FILE_APPEND);
+                header("Location: index.php?success");
                 exit;
             } else {
-                $error = "فرم را با دقت پر کنید.";
+                    $error = "لطفاً فرم ثبت نام را با دقت پر کنید.";
             }
 
             break;
+
         case 'login':
-            // ورود کاربر
+            // ورود به سایت
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $existing_users = file(USERS_FILE, FILE_IGNORE_NEW_LINES);
-            $user_found = false;
 
-            // بررسی وجود کاربر
+            // جستجوی کاربر برای ورود
+            $existing_users = file(DATA_PATH.'/users.txt', FILE_IGNORE_NEW_LINES);
             foreach($existing_users as $existing_user) {
                 $user_data = explode("|", $existing_user);
-                if($user_data[2] === $email && password_verify($password, $user_data[1])) {
-                    $user_found = true;
-                    break;
+                if($user_data[1] === $email && $user_data[2] === md5($password)) {
+                    // ورود به سایت
+                    $_SESSION['user_email'] = $user_data[1];
+                    header("Location: welcome.php");
+                    exit;
                 }
             }
 
-            if($user_found) {
-                header("Location: welcome.php");
-                exit;
-            } else {
-                $error = "ایمیل یا رمز عبور اشتباه است.";
-            }
-
+            $error = "نام کاربری و یا کلمه عبور شما اشتباه است.";
             break;
     }
 }
-?>
