@@ -1,88 +1,43 @@
-html, body {
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Epic Cash Pool</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<header>
+<h1>Epic Cash Pool</h1>
+<nav>
+<ul>
+<li><a href="#">ورود</a></li>
+<li><a href="#">ثبت‌نام</a></li>
+</ul>
+</nav>
+</header>
+<main>
+<section>
+<h2>خوش آمدید</h2>
+<p>به استخر Epic Cash خوش آمدید. در این استخر با الگوریتم randomepic می‌توانید داخل Epic Cash‌ شوید.</p>
+<a href="#">اطلاعات بیشتر</a>
+</section>
+<section>
+<h2>ثبت‌نام</h2>
+<form>
+<label for="username">نام کاربری:</label>
+<input type="text" id="username" name="username"><br> 
 
-nav {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-  background-color: #1F3A93;
-}
+<label for="email">آدرس ایمیل:</label>
+<input type="email" id="email" name="email"><br> 
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-}
+<label for="password">رمز عبور:</label>
+<input type="password" id="password" name="password"><br> 
 
-.hero {
-  background-color: #1F3A93;
-  color: white;
-  text-align: center;
-  padding: 200px 20px;
-}
-
-.hero h1 {
-  font-size: 3em;
-  margin-bottom: 20px;
-}
-
-.balls-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.ball {
-  border-radius: 50%;
-  height: 100px;
-  width: 100px;
-  margin: 20px;
-  animation-duration: 3s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-.yellow-ball {
-  background-color: #F6D121;
-  animation-name: yellow-ball-animate;
-}
-
-.dark-blue-ball {
-  background-color: #1A2735;
-  animation-name: dark-blue-ball-animate;
-}
-
-@keyframes
-yellow-ball-animate {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-100px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes 
-dark-blue-ball-animate {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-200px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+<input type="submit" value="ثبت‌نام">
+</form>
+</section>
+</main>
+<footer>
+<p>&copy; 2022 Epic Cash Pool</p>
+</footer>
+</body>
+</html>
