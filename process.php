@@ -1,7 +1,7 @@
 $servername = "localhost";
-$username = "[نام کاربری دیتابیس]";
-$password = "[رمز عبور دیتابیس]";
-$dbname = "[نام دیتابیس]";
+$username = "[ali]";
+$password = "[1qaz]";
+$dbname = "[ali]";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // ثبت نام کاربران
@@ -50,3 +50,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['login'])) {
 
 // بستن اتصال به دیتابیس
 mysqli_close($conn);
+.
