@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>صفحه HTML شما</title>
+	<!-- کد یکتانت برای آمارگیری -->
+	<script>
+        !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/n5ckfFiE/native-no-data-30981/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
+    </script>
+</head>
+<body>
+    <!-- تبلیغات -->
+	<div id="pos-article-text-card-81453"></div>
+	<div id="pos-article-display-card-81451"></div>
+	<div id="pos-article-display-81425"></div>
+
+	<!-- محتوای صفحه -->
+	<h1>سلام دنیا</h1>
+	<p>این یک صفحه HTML است.</p>
+
+	<!-- لینک‌های پشت تبلیغات -->
+	<div id="ad-links"></div>
+
+	<!-- کد جاوا اسکریپت برای استخراج لینک‌های تبلیغاتی و قرار دادن آن‌ها در قسمت پایین صفحه -->
+	<script>
+		const links = [];
+		document.querySelectorAll('div[id^="pos"]').forEach(div => {
+			if(div.id.startsWith('pos-article') && div.id.includes('card')){
+				links.push({
+					text: 'تبلیغات را دیدن کنید',
+					url: div.getAttribute('data-adurl')
+				});
+			}
+		});
+
+		if(links.length){
+			const adLinksDiv = document.getElementById('ad-links');
+			const ul = document.createElement('ul');
+
+			links.forEach(link => {
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.href = link.url;
+				a.appendChild(document.createTextNode(link.text));
+				li.appendChild(a);
+				ul.appendChild(li);
+			});
+
+			adLinksDiv.appendChild(ul);
+		}
+	</script>
+</body>
+</html>
