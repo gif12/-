@@ -4,3 +4,16 @@ link3:
 link4:
 link5:
 link6:
+{
+  "link": [
+    "https://example.com/link1",
+    "https://example.com/link2",
+    "https://example.com/link3"
+  ],
+  "schedule": [
+    "12:00",
+    "18:00",
+    "20:00",
+    "10:00"
+  ]
+}
